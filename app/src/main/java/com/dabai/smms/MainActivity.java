@@ -15,6 +15,7 @@ import com.wildma.pictureselector.PictureSelector;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,6 +35,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         cb = findViewById(R.id.checkBox);
         progressBar = findViewById(R.id.progressBar);
         button = findViewById(R.id.button);
+
+        IntroView(iv, "1", "点击这里选择图片");
     }
 
 
@@ -89,15 +95,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-
-            startActivity(new Intent(this,SettingsActivity.class));
-
-            return true;
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -153,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
                                         .show();
 
 
-                                 TextView te1 = vi.findViewById(R.id.textView2);
-                                 TextView te2 = vi.findViewById(R.id.textView4);
-                                 TextView te3 = vi.findViewById(R.id.textView6);
-                                 TextView te4 = vi.findViewById(R.id.textView8);
+                                TextView te1 = vi.findViewById(R.id.textView2);
+                                TextView te2 = vi.findViewById(R.id.textView4);
+                                TextView te3 = vi.findViewById(R.id.textView6);
+                                TextView te4 = vi.findViewById(R.id.textView8);
 
 
                                 te4.setText(link);
@@ -189,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
                                         copytext(dellink);
                                     }
                                 });
-
 
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -232,4 +234,23 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "复制成功", Toast.LENGTH_LONG).show();
         }
     }
+
+    private void IntroView(View v, String id, String text) {
+
+        new MaterialIntroView.Builder(this)
+                .enableDotAnimation(true)
+                .enableIcon(true)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.ALL)
+                .setDelayMillis(200)
+                .setTargetPadding(30)
+                .enableFadeAnimation(true)
+                .performClick(false)
+                .setInfoText(text)
+                .setTarget(v)
+                .setUsageId(id) //THIS SHOULD BE UNIQUE ID
+                .show();
+    }
+
+
 }
