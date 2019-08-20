@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
 
-            //打开设置
+            startActivity(new Intent(this,SettingsActivity.class));
 
             return true;
         }
@@ -146,17 +146,17 @@ public class MainActivity extends AppCompatActivity {
 
                                 View vi = getLayoutInflater().inflate(R.layout.dialog_result, null);
                                 new MaterialDialog.Builder(MainActivity.this)
-                                        .title("结果")
+                                        .title("双击复制")
                                         .cancelable(false)
                                         .customView(vi, true)
                                         .positiveText("关闭")
                                         .show();
 
 
-                                final TextView te1 = vi.findViewById(R.id.textView2);
-                                final TextView te2 = vi.findViewById(R.id.textView4);
-                                final TextView te3 = vi.findViewById(R.id.textView6);
-                                final TextView te4 = vi.findViewById(R.id.textView8);
+                                 TextView te1 = vi.findViewById(R.id.textView2);
+                                 TextView te2 = vi.findViewById(R.id.textView4);
+                                 TextView te3 = vi.findViewById(R.id.textView6);
+                                 TextView te4 = vi.findViewById(R.id.textView8);
 
 
                                 te4.setText(link);
@@ -164,31 +164,32 @@ public class MainActivity extends AppCompatActivity {
                                 te2.setText("<img src=\"" + link + "\" alt=\"" + picfile.getName() + "\">");
                                 te3.setText(dellink);
 
+                                te4.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        copytext(link);
+                                    }
+                                });
 
                                 te1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        copytext(te1.getText().toString());
+                                        copytext("![" + picfile.getName() + "](" + link + ")");
                                     }
                                 });
                                 te2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        copytext(te2.getText().toString());
+                                        copytext("<img src=\"" + link + "\" alt=\"" + picfile.getName() + "\">");
                                     }
                                 });
                                 te3.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        copytext(te3.getText().toString());
+                                        copytext(dellink);
                                     }
                                 });
-                                te4.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        copytext(te4.getText().toString());
-                                    }
-                                });
+
 
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
